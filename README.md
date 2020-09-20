@@ -14,3 +14,6 @@ Typically audio plug-ins are used in DAWs, and require the file format .vst3, wh
 ## GUI
 
 ![GUI](https://github.com/clifflinrichie/VolumePlugIn/blob/master/GUI.PNG)
+Volume and Balance Plug-in
+
+![Test Image](https://github.com/clifflinrichie/VolumePlugIn/blob/master/GUI.PNG)
