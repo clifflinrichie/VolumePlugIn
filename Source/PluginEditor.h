@@ -54,7 +54,8 @@ public:
     }
 };
 
-class CliffLp01volumeAndBalanceAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::Slider::Listener
+class CliffLp01volumeAndBalanceAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::Slider::Listener,
+    public juce::Timer
 
 {
 public:
@@ -65,11 +66,19 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    // 5 add this method so that we get called when a slider changes
+    // gets called when a slider changes
+    void sliderValueChanged(juce::Slider* slider) override;
+
+    // slider automation
+    void timerCallback() override;
+
+
+private:
+    // add a slider to the editor
     void sliderValueChanged(juce::Slider* slider) override;
 
 private:
-    // 1 add a slider to the editor
+    add a slider to the editor
     juce::Slider mVolumeSlider;
     juce::Slider mBalanceSlider;
     OtherLookAndFeel otherLookAndFeel;

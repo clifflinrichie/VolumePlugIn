@@ -49,13 +49,16 @@ CliffLp01volumeAndBalanceAudioProcessorEditor::CliffLp01volumeAndBalanceAudioPro
     mBalanceSlider.setRange(secParam->range.start, secParam->range.end);
     mBalanceSlider.setValue(*secParam);
 
-    // 7 set processorEditor to be a listener for the slider
+    // set processorEditor to be a listener for the slider
     mVolumeSlider.addListener(this);
     mBalanceSlider.addListener(this);
 
     // add the slider. now a child of the audio processor editor object
     addAndMakeVisible(mVolumeSlider);
     addAndMakeVisible(mBalanceSlider);
+
+    // timer to update sliders
+    startTimer(100);
 }
 
 CliffLp01volumeAndBalanceAudioProcessorEditor::~CliffLp01volumeAndBalanceAudioProcessorEditor()
@@ -108,4 +111,16 @@ void  CliffLp01volumeAndBalanceAudioProcessorEditor::sliderValueChanged(juce::Sl
 
         DBG("Balance slider changed to " << balanceValue);
     }
+}
+
+void CliffLp01volumeAndBalanceAudioProcessorEditor::timerCallback()
+{
+    auto& params = processor.getParameters();
+
+    //Update the value of each slider to match the value in the Processor
+    juce::AudioParameterFloat* gainParam = (juce::AudioParameterFloat*)params.getUnchecked(0);
+    mVolumeSlider.setValue(gainParam->get(), juce::dontSendNotification);
+
+    juce::AudioParameterFloat* balanceParam = (juce::AudioParameterFloat*)params.getUnchecked(1);
+    mBalanceSlider.setValue(balanceParam->get(), juce::dontSendNotification);
 }
